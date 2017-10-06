@@ -1,0 +1,1 @@
+pandoc $1 -s --css pandoc.css -o render.html --mathjax
