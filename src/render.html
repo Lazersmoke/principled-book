@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="pandoc.css" type="text/css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+</head>
+<body>
+<h1 id="memory">Memory</h1>
+<p>We expect programs to keep track of lots of different things for us. For example, we expect calculators to &quot;remember&quot; what we have typed in so far, so it can keep doing math on it. We also expect web browsers to &quot;remember&quot; which page we are on, and things like which bookmarks are in the bookmarks bar. Unfortunately, computers aren't magical, so they can't just &quot;remember&quot; information; they must store that information somewhere, and then refer back to it later, when they need it.</p>
+<h2 id="binary">Binary</h2>
+<p>The way computers do this in practice is by using encoding the information they want to remember into binary. Binary is simply a sequence of a bunch of <span class="math inline">\(1\)</span>s and <span class="math inline">\(0\)</span>s, <em>on</em>'s and <em>off</em>'s, <em>true</em>'s and <em>false</em>'s, etc. Each individual <span class="math inline">\(1\)</span> or <span class="math inline">\(0\)</span> is called a <em>bit</em>, and they are said to be <em>set</em>, meaning <em>on</em>, or <em>unset</em>, meaning <em>off</em>. It's also called base <span class="math inline">\(2\)</span> because it is the number system that uses exactly <span class="math inline">\(2\)</span> distinct digits. In contrast, the system of &quot;normal numbers&quot; is called base <span class="math inline">\(10\)</span> because it uses exactly <span class="math inline">\(10\)</span> distinct digits: <span class="math inline">\(0123456789\)</span>. When it might be confusing which base we are talking about, since numbers like <span class="math inline">\(101\)</span> are present in both bases, we use a subscript like <span class="math inline">\(101_2\)</span> to mean &quot;the base <span class="math inline">\(2\)</span> number <span class="math inline">\(101\)</span>,&quot; or <span class="math inline">\(10_{10}%_\)</span> to mean &quot;the base <span class="math inline">\(10\)</span> number <span class="math inline">\(101\)</span>.&quot; We usually write binary using <span class="math inline">\(1\)</span>s and <span class="math inline">\(0\)</span>s because it is easier than writing <code>onoffonononoff</code>. Here is an example of some binary:</p>
+<p><span class="math display">\[0011100110100010\]</span></p>
+<p>Notice that this doesn't really mean anything to us as it is. In order for storing some information in binary to make sense, there needs to be a way to convert between the information and its binary representation. This specification for this conversion is called <em>an encoding of data in binary</em>, and actually performing the conversion is called <em>encoding</em> and <em>decoding</em>. As a simple example, let's say we want to encode the user's favorite color in binary, out of these options: Red, Blue, Yellow, or Green.</p>
+<p>It's pretty simple to creating an encoding that will work for these options. We just have to assign an arbitrary sequence of 1s and 0s to each option:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Color</th>
+<th align="center">Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Red</td>
+<td align="center"><span class="math inline">\(00\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Blue</td>
+<td align="center"><span class="math inline">\(01\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Yellow</td>
+<td align="center"><span class="math inline">\(10\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Green</td>
+<td align="center"><span class="math inline">\(11\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Now that we have an encoding, we can interpret the above binary sequence as a bunch of colors smooshed together in a row. We can break <span class="math inline">\(0011100110100010\)</span> into <span class="math inline">\(00\)</span>, <span class="math inline">\(11\)</span>, <span class="math inline">\(10\)</span>, <span class="math inline">\(01\)</span>, <span class="math inline">\(10\)</span>, <span class="math inline">\(10\)</span>, <span class="math inline">\(00\)</span>, <span class="math inline">\(10\)</span>. Each of those corresponds to a color in our table, so we can convert them: <code>Red</code>, <code>Green</code>, <code>Yellow</code>, <code>Blue</code>, <code>Yellow</code>, <code>Yellow</code>, <code>Red</code>, <code>Yellow</code>.</p>
+<p>There's nothing particularly special about our encoding for colors. We could have just as easily used this encoding of base <span class="math inline">\(10\)</span> numbers in binary:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Base <span class="math inline">\(10\)</span></th>
+<th align="center">Base <span class="math inline">\(2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(0\)</span></td>
+<td align="center"><span class="math inline">\(0000\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(1\)</span></td>
+<td align="center"><span class="math inline">\(0001\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(2\)</span></td>
+<td align="center"><span class="math inline">\(0010\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(3\)</span></td>
+<td align="center"><span class="math inline">\(0011\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(4\)</span></td>
+<td align="center"><span class="math inline">\(0100\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">...</td>
+<td align="center">...</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(14\)</span></td>
+<td align="center"><span class="math inline">\(1110\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(15\)</span></td>
+<td align="center"><span class="math inline">\(1111\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>This encoding is actually worth memorizing, since it is the standard on between these bases. The easy way to do this is to notice that the first base <span class="math inline">\(2\)</span> digit corresponds to <span class="math inline">\(1\)</span>, the second corresponds to <span class="math inline">\(2\)</span>, and so on using powers of <span class="math inline">\(2\)</span>. For example, <span class="math inline">\(1010_2\)</span> becomes <span class="math inline">\((1 \cdot 2^3) + (0 \cdot 2^2) + (1 \cdot 2^1) + (0 \cdot 2^0) = 10_{10}%_\)</span>.</p>
+We can interpret the above binary sequence as a bunch of <span class="math inline">\(4\)</span>-bit base <span class="math inline">\(10\)</span> numbers (using the encoding from the table) smooshed together in a row. First, we split <span class="math inline">\(0011100110100010\)</span> into <span class="math inline">\(0011\)</span>, <span class="math inline">\(1001\)</span>, <span class="math inline">\(1010\)</span>, and <span class="math inline">\(0010\)</span>. Now we can use our encoding to convert each of these into base <span class="math inline">\(10\)</span>:
+<span class="math display">\[\begin{align}
+  0011_2&amp;=(0 \cdot 2^3) + (0 \cdot 2^2) + (1 \cdot 2^1) + (1 \cdot 2^0) = 3_{10}\\%_
+  1001_2&amp;=(1 \cdot 2^3) + (0 \cdot 2^2) + (0 \cdot 2^1) + (1 \cdot 2^0) = 9_{10}\\%_
+  1010_2&amp;=(1 \cdot 2^3) + (0 \cdot 2^2) + (1 \cdot 2^1) + (0 \cdot 2^0) = 10_{10}\\%_
+  0010_2&amp;=(0 \cdot 2^3) + (0 \cdot 2^2) + (1 \cdot 2^1) + (0 \cdot 2^0) = 2_{10}%_
+\end{align}\]</span>
+<p>Note that we usually write binary with all the leading <span class="math inline">\(0\)</span>s intact. This is because the length of the number is indicative of how much storage space we need to write that number in memory.</p>
+<ul>
+<li>Processor Registers/Cache</li>
+<li>Random Access Memory (RAM)</li>
+<li>Disk Storage (Hard drive, SSD, flash drive, or similar)</li>
+</ul>
+</body>
+</html>

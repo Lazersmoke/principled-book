@@ -17,7 +17,7 @@ Set theorists (mathematicians who study sets) have their own definition of funct
 ## Technical Digression: Set Theoretic Functions
 
 A relation $f : D \to C$ is a set $D$, (the domain) a set $C$, (the codomain, or range) and a subset $M \subset D \times C$ of the cartesian product of the domain and the codomain.
-A function is a relation that associates every value from its domain to **exactly one** value in its codomain: 
+A function is a relation that associates every value from its domain to **exactly one** value in its codomain:
 
 $$
   \forall x \in D\ldotp \exists f(x) \in C\ldotp (x,f(x)) \in M \land \not\exists y \in C\ldotp (y \neq f(x) \land (x,y) \in M)
@@ -52,10 +52,33 @@ $f(x)$ does this by performing a series of mathematical operations on the input 
 
 ## Haskell's Platonic Functions
 
-Not all programming languages commit this muddling of terms between the theoretical and the practical, however.
-Consider this function, written in Haskell:
+Compare these functions:
+
+```haskell
+plusFiveHaskell :: Int -> Int
+plusFiveHaskell x = x + 5
+```
+
+```javascript
+function plusFiveJS(x){
+  return x + 5;
+}
+```
+
+These two functions do fundamentally the same thing, namely add $5$ to their input.
+These functions are both *pure*, meaning they don't do any side-effects, they just return a value.
+In fact, Haskell specifies that all functions must be pure, so just like the mathematical function $f(x) = x + 5$, they don't do anything other than compute a value and return it.
+If we wanted to implement `doStuff` in Haskell, we must specify that it does input/output actions by adding `IO` to the type, to say that we are constructing a series of input/output statements instead of just computing a new `Int`:
 
 ```haskell
 doStuff :: Int -> IO Int
-doStuff = do
-  put
+doStuff x = do
+  putStrLn "I'm still doing stuff, but this time it's in the type!"
+  return (x + 30)
+```
+
+This added layer of assurance that functions will only perform side-effects if they explicitly say they do allows us to do some pretty cool things.
+We could reasonably consider `plusFiveHaskell` to have a codomain of `Int` rather than of program statements, which makes reasoning about it much easier to do, since we can apply all our mathematical intuition (think $f(x)$) to figure out what they do.
+Unfortunately, we have no such luck in JavaScript.
+Even though *we* know `plusFiveJS` is pure, we don't have a way to tell that to JavaScript or to other developers, since all functions in JavaScript are assumed to be of the *impure*, side-effect producing variety.
+We must therefore consider all JavaScript functions to have the mathematically unsatisfying codomain of "program statements."

@@ -1,1 +1,3 @@
-pandoc $1 -s --css pandoc.css -o render.html --mathjax
+inotifywait -q -m -e close_write $1 | while read -r filename event; do 
+  pandoc $1 -s --css pandoc.css -o render.html --mathjax
+done
